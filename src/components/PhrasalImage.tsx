@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 /** Bump when image assets change so browsers fetch fresh files. */
-const IMAGE_CACHE_VERSION = "3";
+const IMAGE_CACHE_VERSION = "4";
 
 export type PhrasalImageVariant = "thumb" | "full";
 
