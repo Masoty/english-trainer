@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc --noEmit && vite build",
+    "images:optimize": "node scripts/optimize-images.mjs",
+    "build": "npm run images:optimize && tsc --noEmit && vite build",
     "preview": "vite preview",
     "build:verbs": "node scripts/build-phrasal-catalog.mjs",
     "sync:images": "node scripts/sync-phrasal-jpgs.mjs",
@@ -21,6 +22,7 @@
     "@types/react-dom": "^19.0.0",
     "@vitejs/plugin-react": "^4.3.4",
     "typescript": "~5.7.2",
+    "sharp": "^0.34.1",
     "vite": "^6.0.0"
   }
 }

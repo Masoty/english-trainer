@@ -496,11 +496,32 @@ a {
   transform: scale(0.98);
 }
 
+.phrasal-picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.phrasal-picture img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.image-option .phrasal-picture,
 .image-option img,
 .phrasal-fallback {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
+}
+
+.hero-image-wrap .phrasal-picture,
+.hero-image-wrap img {
+  width: 100%;
+  height: 100%;
   display: block;
 }
 

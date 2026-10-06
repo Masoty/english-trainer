@@ -92,7 +92,12 @@ export function GamePage() {
                 onClick={() => answer(opt.id, mode.multiplier)}
               >
                 <div className="image-option-media">
-                  <PhrasalImage src={opt.image} alt={opt.phrase} phrase={opt.phrase} />
+                  <PhrasalImage
+                  src={opt.image}
+                  alt={opt.phrase}
+                  phrase={opt.phrase}
+                  variant="thumb"
+                />
                 </div>
                 {feedback && (
                   <div className="option-reveal">
@@ -114,6 +119,7 @@ export function GamePage() {
               alt={target.phrase}
               phrase={target.phrase}
               className="hero-image"
+              variant="full"
             />
           </div>
           {feedback && (
