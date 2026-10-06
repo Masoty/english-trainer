@@ -9,6 +9,7 @@ type LayoutProps = {
   subtitle?: string;
   score?: number;
   streak?: number;
+  headerExtra?: ReactNode;
 };
 
 export function Layout({
@@ -19,6 +20,7 @@ export function Layout({
   subtitle,
   score,
   streak,
+  headerExtra,
 }: LayoutProps) {
   return (
     <div className="app-shell">
@@ -35,14 +37,17 @@ export function Layout({
             <span className="logo">English Trainer</span>
           )}
         </div>
-        {(score !== undefined || streak !== undefined) && (
-          <div className="header-stats">
-            {score !== undefined && <span className="stat-pill">⭐ {score}</span>}
-            {streak !== undefined && streak > 0 && (
-              <span className="stat-pill streak">🔥 {streak}</span>
-            )}
-          </div>
-        )}
+        <div className="header-right">
+          {headerExtra}
+          {(score !== undefined || streak !== undefined) && (
+            <div className="header-stats">
+              {score !== undefined && <span className="stat-pill">⭐ {score}</span>}
+              {streak !== undefined && streak > 0 && (
+                <span className="stat-pill streak">🔥 {streak}</span>
+              )}
+            </div>
+          )}
+        </div>
       </header>
 
       {(title || subtitle) && (

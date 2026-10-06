@@ -44,7 +44,13 @@ async function main() {
     process.exit(1);
   }
 
-  const jpgs = fs.readdirSync(imgDir).filter((f) => f.endsWith(".jpg"));
+  for (const file of fs.readdirSync(imgDir)) {
+    if (file.endsWith(".webp")) {
+      fs.unlinkSync(path.join(imgDir, file));
+    }
+  }
+
+  const jpgs = fs.readdirSync(imgDir).filter((f) => f.endsWith(".jpg")).sort();
   let totalJpg = 0;
   let totalWebp = 0;
   let totalThumb = 0;

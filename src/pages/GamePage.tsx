@@ -1,8 +1,13 @@
+import { useEffect } from "react";
 import { Navigate, useParams } from "react-router-dom";
 import { allPhrasalVerbs, gameModes } from "../data/phrasalVerbs";
 import { Layout } from "../components/Layout";
 import { PhrasalImage } from "../components/PhrasalImage";
+import { SoundControls } from "../components/SoundControls";
+import { useAudioSettings } from "../hooks/useAudioSettings";
 import { useGameSession } from "../hooks/useGameSession";
+import { playCorrect, playNext, playTap, playWrong, unlockAudio } from "../utils/gameAudio";
+import { speakEnglish, speakEnglishSequence, stopSpeech } from "../utils/speech";
 
 function optionClass(
   id: number,
@@ -19,6 +24,7 @@ function optionClass(
 export function GamePage() {
   const { categoryId, modeId } = useParams<{ categoryId: string; modeId: string }>();
   const mode = gameModes.find((m) => m.id === modeId);
+  const { sfxEnabled, voiceEnabled, toggleSfx, toggleVoice } = useAudioSettings();
 
   if (categoryId !== "phrasal-verbs" || !mode) {
     return <Navigate to="/" replace />;
@@ -44,12 +50,53 @@ export function GamePage() {
     totalAnswered > 0 ? Math.round((correctCount / totalAnswered) * 100) : 100;
   const streakProgress = streak > 0 ? Math.min(100, (streak % 10) * 10 + 10) : 8;
 
+  useEffect(() => {
+    if (!feedback) return;
+    if (sfxEnabled) {
+      if (feedback === "correct") playCorrect();
+      else playWrong();
+    }
+    if (voiceEnabled) {
+      speakEnglishSequence([target.phrase, target.sentence], true);
+    }
+  }, [feedback, sfxEnabled, voiceEnabled, target.phrase, target.sentence]);
+
+  useEffect(() => {
+    stopSpeech();
+    if (!voiceEnabled || feedback) return;
+    if (type === "choose-image" || type === "choose-phrase") return;
+    speakEnglish(target.phrase, true);
+  }, [questionNumber, type, voiceEnabled, feedback, target.phrase]);
+
+  useEffect(() => () => stopSpeech(), []);
+
+  const handleAnswer = (id: number) => {
+    unlockAudio();
+    if (sfxEnabled) playTap();
+    answer(id, mode.multiplier);
+  };
+
+  const handleNext = () => {
+    unlockAudio();
+    if (sfxEnabled) playNext();
+    stopSpeech();
+    nextRound();
+  };
+
   return (
     <Layout
       backTo={`/category/${categoryId}`}
       backLabel="Режими"
       score={score}
       streak={streak}
+      headerExtra={
+        <SoundControls
+          sfxEnabled={sfxEnabled}
+          voiceEnabled={voiceEnabled}
+          onToggleSfx={toggleSfx}
+          onToggleVoice={toggleVoice}
+        />
+      }
     >
       <div className="session-stats" aria-live="polite">
         <span className="session-stat">№{questionNumber}</span>
@@ -89,15 +136,15 @@ export function GamePage() {
                 type="button"
                 className={`image-option ${optionClass(opt.id, target.id, selectedId, feedback)} ${feedback ? "revealed" : ""}`}
                 disabled={!!feedback}
-                onClick={() => answer(opt.id, mode.multiplier)}
+                onClick={() => handleAnswer(opt.id)}
               >
                 <div className="image-option-media">
                   <PhrasalImage
-                  src={opt.image}
-                  alt={opt.phrase}
-                  phrase={opt.phrase}
-                  variant="thumb"
-                />
+                    src={opt.image}
+                    alt={opt.phrase}
+                    phrase={opt.phrase}
+                    variant="thumb"
+                  />
                 </div>
                 {feedback && (
                   <div className="option-reveal">
@@ -136,7 +183,7 @@ export function GamePage() {
                 type="button"
                 className={`text-option ${optionClass(opt.id, target.id, selectedId, feedback)}`}
                 disabled={!!feedback}
-                onClick={() => answer(opt.id, mode.multiplier)}
+                onClick={() => handleAnswer(opt.id)}
               >
                 <span className="option-primary">{opt.uk}</span>
                 {feedback && <span className="option-reveal-inline">{opt.phrase}</span>}
@@ -165,7 +212,7 @@ export function GamePage() {
                 type="button"
                 className={`text-option ${optionClass(opt.id, target.id, selectedId, feedback)}`}
                 disabled={!!feedback}
-                onClick={() => answer(opt.id, mode.multiplier)}
+                onClick={() => handleAnswer(opt.id)}
               >
                 <span className="option-primary">{opt.phrase}</span>
                 {feedback && <span className="option-reveal-inline">{opt.uk}</span>}
@@ -188,7 +235,7 @@ export function GamePage() {
             </div>
             <p className="feedback-example">{target.sentence}</p>
           </div>
-          <button type="button" className="btn-primary btn-next" onClick={nextRound}>
+          <button type="button" className="btn-primary btn-next" onClick={handleNext}>
             Далі ⟶
           </button>
         </div>
