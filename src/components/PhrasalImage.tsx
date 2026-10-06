@@ -1,5 +1,8 @@
 import { useState } from "react";
 
+/** Bump when replacing flashcard JPGs so browsers fetch fresh assets. */
+const IMAGE_CACHE_VERSION = "2";
+
 type PhrasalImageProps = {
   src: string;
   alt: string;
@@ -19,9 +22,11 @@ export function PhrasalImage({ src, alt, phrase, className = "" }: PhrasalImageP
     );
   }
 
+  const srcWithCache = src.includes("?") ? src : `${src}?v=${IMAGE_CACHE_VERSION}`;
+
   return (
     <img
-      src={src}
+      src={srcWithCache}
       alt={alt}
       className={className}
       loading="lazy"

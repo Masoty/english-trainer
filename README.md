@@ -24,6 +24,13 @@ npm run dev
 npm run sync:images
 ```
 
+Унікальні ілюстрації (різні локації, палітри, персонажі):
+
+```bash
+npm run prompts:distinct   # scripts/regen-chunk-*.json
+# далі — GenerateImage по prompt у кожному chunk і npm run sync:images
+```
+
 Перегенерувати розширений каталог (після зміни `scripts/phrasal-seed.json`):
 
 ```bash

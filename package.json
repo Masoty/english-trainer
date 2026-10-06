@@ -8,7 +8,8 @@
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
     "build:verbs": "node scripts/build-phrasal-catalog.mjs",
-    "sync:images": "node scripts/sync-phrasal-jpgs.mjs"
+    "sync:images": "node scripts/sync-phrasal-jpgs.mjs",
+    "prompts:distinct": "node scripts/build-distinct-prompts.mjs"
   },
   "dependencies": {
     "react": "^19.0.0",
