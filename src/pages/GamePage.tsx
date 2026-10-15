@@ -86,6 +86,8 @@ export function GamePage() {
 
   return (
     <Layout
+      shellClassName="game-shell"
+      mainClassName="game-main"
       backTo={`/category/${categoryId}`}
       backLabel="Режими"
       score={score}
@@ -99,6 +101,7 @@ export function GamePage() {
         />
       }
     >
+      <div className="game-viewport">
       <div className="session-stats" aria-live="polite">
         <span className="session-stat">№{questionNumber}</span>
         <span className="session-stat">
@@ -120,10 +123,8 @@ export function GamePage() {
           title={streak > 0 ? `Серія: ${streak}` : "Безкінечний режим"}
         />
       </div>
-      <p className="round-label endless-label">Безкінечне тренування — грай скільки завгодно</p>
-
       {type === "choose-image" && (
-        <section className="game-panel" key={`${questionNumber}-image`}>
+        <section className="game-panel game-panel--choose-image" key={`${questionNumber}-image`}>
           <div className="prompt-card">
             <p className="prompt-label">Знайди картинку для:</p>
             <h2 className="prompt-phrase">{target.phrase}</h2>
@@ -167,7 +168,7 @@ export function GamePage() {
       )}
 
       {type === "choose-word" && (
-        <section className="game-panel" key={`${questionNumber}-word`}>
+        <section className="game-panel game-panel--choose-word" key={`${questionNumber}-word`}>
           <div className="hero-image-wrap">
             <PhrasalImage
               src={target.image}
@@ -202,7 +203,7 @@ export function GamePage() {
       )}
 
       {type === "choose-phrase" && (
-        <section className="game-panel" key={`${questionNumber}-phrase`}>
+        <section className="game-panel game-panel--choose-phrase" key={`${questionNumber}-phrase`}>
           <div className="prompt-card">
             <p className="prompt-label">Яке фразове дієслово?</p>
             <p className="prompt-uk">{target.uk}</p>
@@ -231,7 +232,7 @@ export function GamePage() {
       )}
 
       {feedback && type !== "choose-image" && (
-        <div className={`feedback-bar ${feedback}`}>
+        <div className={`feedback-bar feedback-bar--compact ${feedback}`}>
           <div className="feedback-text">
             <p className="feedback-status">
               {feedback === "correct" ? "✓ Правильно!" : "✗ Не зовсім…"}
@@ -248,6 +249,7 @@ export function GamePage() {
           </button>
         </div>
       )}
+      </div>
     </Layout>
   );
 }

@@ -10,6 +10,8 @@ type LayoutProps = {
   score?: number;
   streak?: number;
   headerExtra?: ReactNode;
+  shellClassName?: string;
+  mainClassName?: string;
 };
 
 export function Layout({
@@ -21,9 +23,11 @@ export function Layout({
   score,
   streak,
   headerExtra,
+  shellClassName,
+  mainClassName,
 }: LayoutProps) {
   return (
-    <div className="app-shell">
+    <div className={shellClassName ? `app-shell ${shellClassName}` : "app-shell"}>
       <header className="app-header">
         <div className="header-left">
           {backTo ? (
@@ -57,7 +61,7 @@ export function Layout({
         </div>
       )}
 
-      <main className="app-main">{children}</main>
+      <main className={mainClassName ? `app-main ${mainClassName}` : "app-main"}>{children}</main>
     </div>
   );
 }

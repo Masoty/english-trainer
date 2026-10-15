@@ -38,6 +38,13 @@ body {
   min-height: 100dvh;
 }
 
+html:has(.game-shell),
+html:has(.game-shell) body {
+  overflow: hidden;
+  height: 100%;
+  max-height: 100dvh;
+}
+
 button,
 a {
   -webkit-tap-highlight-color: transparent;
@@ -64,6 +71,281 @@ a {
   width: 100%;
   max-width: var(--game-content-max);
   margin: 0 auto;
+}
+
+/* ——— Game: один екран без скролу ——— */
+.game-shell {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  max-height: 100dvh;
+  overflow: hidden;
+  padding-bottom: calc(0.35rem + env(safe-area-inset-bottom, 0px));
+}
+
+.game-shell .app-header {
+  margin-bottom: 0.25rem;
+  flex-shrink: 0;
+}
+
+.game-main {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  max-width: var(--content-max);
+}
+
+.game-viewport {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.game-main .session-stats {
+  margin-bottom: 0.35rem;
+  flex-shrink: 0;
+  gap: 0.3rem 0.45rem;
+}
+
+.game-main .progress-track {
+  margin-bottom: 0.35rem;
+  flex-shrink: 0;
+  height: 5px;
+}
+
+.game-main .round-label.endless-label {
+  display: none;
+}
+
+.game-main .game-panel {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.game-main .prompt-card {
+  flex-shrink: 0;
+  padding: 0.55rem 0.65rem;
+  margin-bottom: 0.35rem;
+  border-radius: 0.75rem;
+}
+
+.game-main .prompt-label {
+  margin-bottom: 0.2rem;
+  font-size: 0.78rem;
+}
+
+.game-main .prompt-phrase {
+  font-size: clamp(1.05rem, 3.8vw, 1.45rem);
+}
+
+.game-main .prompt-phonetic {
+  margin-top: 0.15rem;
+  font-size: 0.78rem;
+}
+
+.game-main .prompt-reveal-uk,
+.game-main .prompt-reveal-phrase {
+  margin-top: 0.35rem;
+  font-size: 0.82rem;
+}
+
+.game-main .prompt-uk {
+  font-size: clamp(0.92rem, 3vw, 1.05rem);
+}
+
+/* choose-image */
+.game-panel--choose-image .image-options {
+  flex: 1;
+  min-height: 0;
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 0.35rem;
+}
+
+@media (min-width: 768px) {
+  .game-panel--choose-image .image-options {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-rows: minmax(0, 1fr);
+    gap: 0.45rem;
+  }
+}
+
+.game-panel--choose-image .image-option {
+  min-height: 0;
+  height: 100%;
+  border-width: 2px;
+}
+
+.game-panel--choose-image .image-option-media {
+  flex: 1;
+  min-height: 0;
+  aspect-ratio: unset;
+}
+
+.game-panel--choose-image .image-option-caption {
+  flex: 0 0 auto;
+  padding: 0.22rem 0.3rem 0.28rem;
+  font-size: clamp(0.58rem, 2.2vw, 0.68rem);
+  line-height: 1.15;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.game-panel--choose-image .option-reveal {
+  flex-shrink: 0;
+  padding: 0.2rem 0.3rem 0.25rem;
+}
+
+.game-panel--choose-image .option-reveal-phrase {
+  font-size: clamp(0.58rem, 2vw, 0.68rem);
+}
+
+.game-main .image-round-actions {
+  margin-top: 0.35rem;
+  flex-shrink: 0;
+}
+
+.game-main .image-round-actions .btn-next {
+  min-height: 40px;
+  padding: 0.45rem 1.1rem;
+  font-size: 0.92rem;
+}
+
+/* choose-word */
+.game-panel--choose-word .hero-image-wrap {
+  flex: 1 1 auto;
+  min-height: 0;
+  width: min(100%, 42vh, 320px);
+  max-width: min(100%, 42vh, 320px);
+  margin: 0 auto 0.25rem;
+  aspect-ratio: 1;
+}
+
+.game-panel--choose-word .hero-reveal {
+  flex-shrink: 0;
+  margin: 0 0 0.15rem;
+}
+
+.game-panel--choose-word .hero-reveal-phrase {
+  font-size: clamp(0.95rem, 3vw, 1.15rem);
+}
+
+.game-panel--choose-word .hero-reveal-phonetic {
+  font-size: 0.78rem;
+}
+
+.game-panel--choose-word .prompt-label.center {
+  flex-shrink: 0;
+  margin: 0.15rem 0 0.25rem;
+  font-size: 0.78rem;
+}
+
+.game-panel--choose-word .text-options {
+  flex: 1;
+  min-height: 0;
+  grid-template-rows: repeat(4, minmax(0, 1fr));
+  align-content: stretch;
+  gap: 0.3rem;
+}
+
+.game-main .text-option {
+  min-height: 0;
+  padding: 0.35rem 0.55rem;
+  font-size: clamp(0.78rem, 2.5vw, 0.92rem);
+  line-height: 1.2;
+}
+
+/* choose-phrase */
+.game-panel--choose-phrase .text-options {
+  flex: 1;
+  min-height: 0;
+  grid-template-rows: repeat(4, minmax(0, 1fr));
+  gap: 0.3rem;
+}
+
+.game-main .feedback-bar {
+  flex-shrink: 0;
+  margin-top: 0.35rem;
+}
+
+.game-main .feedback-bar--compact {
+  padding: 0.45rem 0.55rem;
+  gap: 0.4rem;
+}
+
+.game-main .feedback-bar--compact .feedback-text {
+  gap: 0.25rem;
+}
+
+.game-main .feedback-bar--compact .feedback-status {
+  font-size: 0.88rem;
+}
+
+.game-main .feedback-bar--compact .feedback-translation {
+  padding: 0.35rem 0.45rem;
+}
+
+.game-main .feedback-bar--compact .feedback-phrase {
+  font-size: 0.92rem;
+}
+
+.game-main .feedback-bar--compact .feedback-phonetic {
+  font-size: 0.75rem;
+}
+
+.game-main .feedback-bar--compact .feedback-uk {
+  margin-top: 0.2rem;
+  font-size: 0.82rem;
+}
+
+.game-main .feedback-bar--compact .feedback-example {
+  font-size: 0.78rem;
+  line-height: 1.25;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.game-main .feedback-bar--compact .btn-next {
+  min-height: 40px;
+  padding: 0.45rem 1rem;
+  font-size: 0.92rem;
+}
+
+@media (max-height: 700px) {
+  .game-main .session-stat-record {
+    display: none;
+  }
+
+  .game-panel--choose-word .hero-image-wrap {
+    width: min(100%, 34vh, 260px);
+    max-width: min(100%, 34vh, 260px);
+  }
+}
+
+@media (max-height: 580px) {
+  .game-main .prompt-phonetic {
+    display: none;
+  }
+
+  .game-panel--choose-word .hero-reveal-phonetic {
+    display: none;
+  }
+
+  .game-main .feedback-bar--compact .feedback-phonetic,
+  .game-main .feedback-bar--compact .feedback-example {
+    display: none;
+  }
 }
 
 .app-header {
