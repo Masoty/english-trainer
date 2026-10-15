@@ -505,7 +505,6 @@ a {
   overflow: hidden;
   cursor: pointer;
   background: var(--bg-soft);
-  aspect-ratio: 1;
   min-height: 0;
   transition: border-color 0.15s, transform 0.15s;
   touch-action: manipulation;
@@ -515,7 +514,6 @@ a {
 }
 
 .image-option.revealed {
-  aspect-ratio: auto;
   overflow: visible;
 }
 
@@ -523,8 +521,30 @@ a {
   aspect-ratio: 1;
   width: 100%;
   overflow: hidden;
-  border-radius: calc(clamp(0.65rem, 2vw, 1rem) - 3px);
+  border-radius: calc(clamp(0.65rem, 2vw, 1rem) - 3px) calc(clamp(0.65rem, 2vw, 1rem) - 3px) 0 0;
   flex-shrink: 0;
+}
+
+.image-option-caption {
+  margin: 0;
+  padding: 0.4rem 0.45rem 0.5rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--text);
+  background: var(--bg-soft);
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .image-option-caption {
+    font-size: 0.72rem;
+    padding: 0.45rem 0.5rem 0.55rem;
+  }
 }
 
 .image-option:active:not(:disabled) {

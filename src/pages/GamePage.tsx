@@ -146,10 +146,10 @@ export function GamePage() {
                     variant="thumb"
                   />
                 </div>
+                <p className="image-option-caption">{opt.uk}</p>
                 {feedback && (
                   <div className="option-reveal">
                     <span className="option-reveal-phrase">{opt.phrase}</span>
-                    <span className="option-reveal-uk">{opt.uk}</span>
                   </div>
                 )}
               </button>
