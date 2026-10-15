@@ -606,6 +606,16 @@ a {
   align-items: stretch;
 }
 
+.image-round-actions {
+  margin-top: clamp(0.75rem, 2.5vw, 1.25rem);
+  display: flex;
+  justify-content: center;
+}
+
+.image-round-actions .btn-next {
+  min-width: 8rem;
+}
+
 @media (min-width: 768px) {
   .option-reveal-phrase {
     font-size: 0.78rem;

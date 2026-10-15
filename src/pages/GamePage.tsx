@@ -57,9 +57,10 @@ export function GamePage() {
       else playWrong();
     }
     if (voiceEnabled) {
-      speakEnglishSequence([target.phrase, target.sentence], true);
+      if (type === "choose-image") speakEnglish(target.phrase, true);
+      else speakEnglishSequence([target.phrase, target.sentence], true);
     }
-  }, [feedback, sfxEnabled, voiceEnabled, target.phrase, target.sentence]);
+  }, [feedback, sfxEnabled, voiceEnabled, type, target.phrase, target.sentence]);
 
   useEffect(() => {
     stopSpeech();
@@ -155,6 +156,13 @@ export function GamePage() {
               </button>
             ))}
           </div>
+          {feedback && (
+            <div className="image-round-actions">
+              <button type="button" className="btn-primary btn-next" onClick={handleNext}>
+                Далі ⟶
+              </button>
+            </div>
+          )}
         </section>
       )}
 
@@ -222,7 +230,7 @@ export function GamePage() {
         </section>
       )}
 
-      {feedback && (
+      {feedback && type !== "choose-image" && (
         <div className={`feedback-bar ${feedback}`}>
           <div className="feedback-text">
             <p className="feedback-status">
