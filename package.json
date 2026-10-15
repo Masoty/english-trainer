@@ -11,7 +11,8 @@
     "preview": "vite preview",
     "build:verbs": "node scripts/build-phrasal-catalog.mjs",
     "sync:images": "node scripts/sync-phrasal-jpgs.mjs",
-    "prompts:distinct": "node scripts/build-distinct-prompts.mjs"
+    "prompts:memory": "node scripts/build-memory-style-prompts.mjs",
+    "images:apply": "node scripts/apply-generated-images.mjs"
   },
   "dependencies": {
     "react": "^19.0.0",

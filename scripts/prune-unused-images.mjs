@@ -17,10 +17,19 @@ for (const file of ["src/data/phrasalVerbs.ts", "src/data/phrasalVerbsExtended.t
   }
 }
 
+function slugFromAsset(file) {
+  if (file.endsWith(".thumb.webp")) return file.slice(0, -".thumb.webp".length);
+  if (file.endsWith(".webp")) return file.slice(0, -".webp".length);
+  if (file.endsWith(".jpg")) return file.slice(0, -".jpg".length);
+  return null;
+}
+
+const usedSlugs = new Set([...used].map((f) => f.replace(/\.jpg$/i, "")));
+
 let removed = 0;
 for (const file of fs.readdirSync(imgDir)) {
-  if (!file.endsWith(".jpg")) continue;
-  if (used.has(file)) continue;
+  const slug = slugFromAsset(file);
+  if (!slug || usedSlugs.has(slug)) continue;
   fs.unlinkSync(path.join(imgDir, file));
   removed += 1;
   console.log("removed orphan", file);

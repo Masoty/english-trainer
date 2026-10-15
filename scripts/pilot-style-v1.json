@@ -1,0 +1,145 @@
+{
+  "stylePrefix": "Educational phrasal verb flashcard illustration in the same art style as the reference: modern soft digital illustration, comic-book lite, friendly and approachable. Thin dark slightly soft outlines, vibrant but slightly muted harmonious colors, soft gradients and gentle cel-shading, subtle warm paper texture in the background. Simplified expressive human characters with clear body language, minimal uncluttered background with only props needed for the action. Centered composition, square 1:1. Pure illustration only: NO text, NO letters, NO numbers, NO phonetics, NO translations, NO borders, NO colored header bars, NO numbered badges, NO UI chrome, NO watermarks.",
+  "items": [
+    {
+      "id": 121,
+      "phrase": "pick up on",
+      "slug": "pick-up-on",
+      "filename": "pick-up-on.jpg",
+      "scene": "Young woman notices a subtle hint: man beside her makes a small pointing gesture toward something hidden; she has a thoughtful realizing expression, lightbulb moment. Simple indoor cafe background."
+    },
+    {
+      "id": 122,
+      "phrase": "figure out",
+      "slug": "figure-out",
+      "filename": "figure-out.jpg",
+      "scene": "Person at a desk finally placing the last piece of a jigsaw puzzle, relieved happy expression, puzzle nearly complete. Simple desk background."
+    },
+    {
+      "id": 123,
+      "phrase": "give in to",
+      "slug": "give-in-to",
+      "filename": "give-in-to.jpg",
+      "scene": "Person giving in to temptation, reaching for a slice of frosted cake on a plate while looking guilty but unable to resist. Simple kitchen table background."
+    },
+    {
+      "id": 124,
+      "phrase": "look forward to",
+      "slug": "look-forward-to",
+      "filename": "look-forward-to.jpg",
+      "scene": "Happy person with suitcase and sun hat gazing excitedly toward a sunny beach horizon through a window or open door, dreaming of upcoming trip. Warm hopeful mood."
+    },
+    {
+      "id": 125,
+      "phrase": "break away from",
+      "slug": "break-away-from",
+      "filename": "break-away-from.jpg",
+      "scene": "Person breaking free from a chain and walking away from a group of identical gray figures behind them, determined independent expression. Simple path background."
+    },
+    {
+      "id": 126,
+      "phrase": "bring in",
+      "slug": "bring-in",
+      "filename": "bring-in.jpg",
+      "scene": "Friendly manager opening office door and welcoming several new clients inside, handshakes, positive business growth mood. Simple modern office entryway."
+    },
+    {
+      "id": 127,
+      "phrase": "cut across",
+      "slug": "cut-across",
+      "filename": "cut-across.jpg",
+      "scene": "Two people walking a diagonal shortcut path through a green city park while a train station building is visible ahead, hurrying to save time. Sunny day."
+    },
+    {
+      "id": 128,
+      "phrase": "run through",
+      "slug": "run-through",
+      "filename": "run-through.jpg",
+      "scene": "Two actors on a small theater stage rehearsing, one holding a script booklet without readable text, practicing lines before performance. Red curtain hint in background."
+    },
+    {
+      "id": 129,
+      "phrase": "get over with",
+      "slug": "get-over-with",
+      "filename": "get-over-with.jpg",
+      "scene": "Tired office workers in a meeting wanting to finish quickly, one glancing at wristwatch, another closing laptop with relieved expression. Simple conference room."
+    },
+    {
+      "id": 130,
+      "phrase": "call off",
+      "slug": "call-off",
+      "filename": "call-off.jpg",
+      "scene": "Outdoor soccer or sports match cancelled due to storm: dark rain clouds and lightning, referee waving arms to stop play, players walking off wet field with disappointed faces."
+    },
+    {
+      "id": 131,
+      "phrase": "set out on",
+      "slug": "set-out-on",
+      "filename": "set-out-on.jpg",
+      "scene": "MEMORABLE HOOK: At pink-orange dawn, two hikers take their first giant step over a doorstep into open wilderness, oversized compass in hand pointing forward, backpacks huge, faces full of awe and courage. One unmistakable image of beginning an adventure."
+    },
+    {
+      "id": 132,
+      "phrase": "hold off on",
+      "slug": "hold-off-on",
+      "filename": "hold-off-on.jpg",
+      "scene": "MEMORABLE HOOK: Person straining both arms to hold back an enormous glossy smartphone sliding toward them like a wild animal on a leash, resisting temptation, exaggerated frustrated desire expression. Funny and instantly recognizable delay impulse."
+    },
+    {
+      "id": 133,
+      "phrase": "come across",
+      "slug": "come-across",
+      "filename": "come-across.jpg",
+      "scene": "MEMORABLE HOOK: In dusty attic, person kneeling and suddenly discovering a glowing vintage diary under loose floorboards, golden dust motes in sunbeam, shocked delighted face, hands frozen mid-reach. Strong surprise discovery moment."
+    },
+    {
+      "id": 134,
+      "phrase": "break off from",
+      "slug": "break-off-from",
+      "filename": "break-off-from.jpg",
+      "scene": "MEMORABLE HOOK: Young man snapping a bright colorful friendship bracelet chain in half while turning his back and walking away from three friends reaching out behind him, decisive fresh-start expression. Clear visual of ending ties."
+    },
+    {
+      "id": 135,
+      "phrase": "put across",
+      "slug": "put-across",
+      "filename": "put-across.jpg",
+      "scene": "MEMORABLE HOOK: Confident woman on small stage building a visible rainbow bridge from her open palms to three listeners, simple glowing lightbulb icons traveling across bridge into their minds, everyone nodding with understanding. Clear communicate idea metaphor."
+    },
+    {
+      "id": 136,
+      "phrase": "take down",
+      "slug": "take-down",
+      "filename": "take-down.jpg",
+      "scene": "MEMORABLE HOOK: Student frantically writing giant notes on a huge notepad while professor points at board, papers flying, exaggerated speed lines. Clearly taking down notes."
+    },
+    {
+      "id": 137,
+      "phrase": "go without",
+      "slug": "go-without",
+      "filename": "go-without.jpg",
+      "scene": "MEMORABLE HOOK: Sleepy person pushing away an enormous steaming coffee cup with both hands, choosing to go without coffee, peaceful morning window light."
+    },
+    {
+      "id": 138,
+      "phrase": "work up to",
+      "slug": "work-up-to",
+      "filename": "work-up-to.jpg",
+      "scene": "MEMORABLE HOOK: Progression visual: same woman shown running short distance then medium then full marathon finish line, training steps getting bigger, triumphant at end."
+    },
+    {
+      "id": 139,
+      "phrase": "fall through",
+      "slug": "fall-through",
+      "filename": "fall-through.jpg",
+      "scene": "MEMORABLE HOOK: Business handshake dissolving into falling puzzle pieces through a hole in the floor, shocked suits, deal collapsing at last second."
+    },
+    {
+      "id": 140,
+      "phrase": "go ahead and",
+      "slug": "go-ahead-and",
+      "filename": "go-ahead-and.jpg",
+      "scene": "MEMORABLE HOOK: Shy student raising hand high while friendly teacher gestures encouraging go ahead, spotlight on student, supportive classroom."
+    }
+  ]
+}
