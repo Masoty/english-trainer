@@ -12,7 +12,8 @@
     "build:verbs": "node scripts/build-phrasal-catalog.mjs",
     "sync:images": "node scripts/sync-phrasal-jpgs.mjs",
     "prompts:memory": "node scripts/build-memory-style-prompts.mjs",
-    "images:apply": "node scripts/apply-generated-images.mjs"
+    "images:apply": "node scripts/apply-generated-images.mjs",
+    "audio:synthesize": "node scripts/synthesize-phrase-audio.mjs"
   },
   "dependencies": {
     "react": "^19.0.0",

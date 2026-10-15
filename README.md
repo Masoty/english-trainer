@@ -31,6 +31,12 @@ npm run prompts:memory     # scripts/memory-regen-chunk-*.json (gitignored)
 # GenerateImage по prompt, потім npm run images:apply && npm run images:optimize
 ```
 
+Озвучка фраз (macOS `say`, один раз):
+
+```bash
+npm run audio:synthesize   # public/audio/phrases/*.m4a
+```
+
 Перегенерувати розширений каталог (після зміни `scripts/phrasal-seed.json`):
 
 ```bash

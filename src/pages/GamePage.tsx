@@ -7,6 +7,7 @@ import { SoundControls } from "../components/SoundControls";
 import { useAudioSettings } from "../hooks/useAudioSettings";
 import { useGameSession } from "../hooks/useGameSession";
 import { playCorrect, playNext, playTap, playWrong, unlockAudio } from "../utils/gameAudio";
+import { playPhraseAudio, preloadPhraseAudio, stopPhraseAudio } from "../utils/phraseAudio";
 import { speakEnglish, speakEnglishSequence, stopSpeech } from "../utils/speech";
 
 const IMAGE_STAGGER_MS = 85;
@@ -54,6 +55,7 @@ export function GamePage() {
 
   const { type, target, options } = currentRound;
   const [imageAnim, setImageAnim] = useState<ImageAnimPhase>("enter");
+  const [imageRoundReady, setImageRoundReady] = useState(false);
   const accuracy =
     totalAnswered > 0 ? Math.round((correctCount / totalAnswered) * 100) : 100;
   const streakProgress = streak > 0 ? Math.min(100, (streak % 10) * 10 + 10) : 8;
@@ -64,9 +66,8 @@ export function GamePage() {
       if (feedback === "correct") playCorrect();
       else playWrong();
     }
-    if (voiceEnabled) {
-      if (type === "choose-image") speakEnglish(target.phrase, true);
-      else speakEnglishSequence([target.phrase, target.sentence], true);
+    if (voiceEnabled && type !== "choose-image") {
+      speakEnglishSequence([target.phrase, target.sentence], true);
     }
   }, [feedback, sfxEnabled, voiceEnabled, type, target.phrase, target.sentence]);
 
@@ -77,15 +78,37 @@ export function GamePage() {
     speakEnglish(target.phrase, true);
   }, [questionNumber, type, voiceEnabled, feedback, target.phrase]);
 
-  useEffect(() => () => stopSpeech(), []);
+  useEffect(() => {
+    stopSpeech();
+    stopPhraseAudio();
+  }, []);
 
   useEffect(() => {
     if (type !== "choose-image") return;
+    let cancelled = false;
+    setImageRoundReady(false);
+    setImageAnim("enter");
+
+    void (async () => {
+      if (voiceEnabled) {
+        await preloadPhraseAudio(target);
+      }
+      if (!cancelled) setImageRoundReady(true);
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [questionNumber, type, target.phrase, target.id, voiceEnabled]);
+
+  useEffect(() => {
+    if (type !== "choose-image" || !imageRoundReady) return;
+    if (voiceEnabled) playPhraseAudio(target);
     setImageAnim("enter");
     const readyAt = IMAGE_ENTER_MS + IMAGE_STAGGER_MS * 3;
     const t = window.setTimeout(() => setImageAnim("play"), readyAt);
     return () => window.clearTimeout(t);
-  }, [questionNumber, type]);
+  }, [imageRoundReady, questionNumber, type, voiceEnabled, target.phrase, target.id]);
 
   useEffect(() => {
     if (type !== "choose-image" || !feedback) return;
@@ -98,6 +121,7 @@ export function GamePage() {
     const doneAt = IMAGE_EXIT_MS + IMAGE_STAGGER_MS * 3 + 40;
     const t = window.setTimeout(() => {
       stopSpeech();
+      stopPhraseAudio();
       if (sfxEnabled) playNext();
       nextRound();
     }, doneAt);
@@ -115,6 +139,7 @@ export function GamePage() {
     unlockAudio();
     if (sfxEnabled) playNext();
     stopSpeech();
+    stopPhraseAudio();
     nextRound();
   };
 
@@ -158,7 +183,10 @@ export function GamePage() {
         />
       </div>
       {type === "choose-image" && (
-        <section className="game-panel game-panel--choose-image" key={`${questionNumber}-image`}>
+        <section
+          className={`game-panel game-panel--choose-image ${imageRoundReady ? "game-panel--ready" : "game-panel--preloading"}`}
+          key={`${questionNumber}-image`}
+        >
           <div
             className={`prompt-card prompt-card-anim ${
               imageAnim === "enter" ? "prompt-card-anim--enter" : ""

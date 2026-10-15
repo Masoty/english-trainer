@@ -285,6 +285,14 @@ a {
   box-shadow: 0 0 0 2px var(--wrong);
 }
 
+.game-panel--choose-image.game-panel--preloading {
+  visibility: hidden;
+}
+
+.game-panel--choose-image.game-panel--ready {
+  visibility: visible;
+}
+
 /* choose-word */
 .game-panel--choose-word .hero-image-wrap {
   flex: 1 1 auto;
