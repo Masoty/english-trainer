@@ -209,15 +209,80 @@ a {
   font-size: clamp(0.58rem, 2vw, 0.68rem);
 }
 
-.game-main .image-round-actions {
-  margin-top: 0.35rem;
-  flex-shrink: 0;
+@keyframes cardPopIn {
+  from {
+    opacity: 0;
+    transform: scale(0.88) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
-.game-main .image-round-actions .btn-next {
-  min-height: 40px;
-  padding: 0.45rem 1.1rem;
-  font-size: 0.92rem;
+@keyframes cardPopOut {
+  from {
+    opacity: 1;
+    transform: none;
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.9) translateY(-8px);
+  }
+}
+
+@keyframes promptCardIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes promptCardOut {
+  from {
+    opacity: 1;
+    transform: none;
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+.image-options-anim--enter .image-option {
+  animation: cardPopIn 0.38s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  animation-delay: var(--stagger, 0ms);
+}
+
+.image-options-anim--exit .image-option {
+  animation: cardPopOut 0.3s ease forwards;
+  animation-delay: var(--stagger, 0ms);
+  pointer-events: none;
+}
+
+.prompt-card-anim--enter {
+  animation: promptCardIn 0.34s ease 0.04s backwards;
+}
+
+.prompt-card-anim--exit {
+  animation: promptCardOut 0.26s ease forwards;
+}
+
+.game-panel--choose-image .image-option.revealed.option-correct,
+.game-panel--choose-image .image-option.revealed.option-wrong {
+  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.game-panel--choose-image .image-option.revealed.option-correct {
+  box-shadow: 0 0 0 2px var(--correct);
+}
+
+.game-panel--choose-image .image-option.revealed.option-wrong {
+  box-shadow: 0 0 0 2px var(--wrong);
 }
 
 /* choose-word */

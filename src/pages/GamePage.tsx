@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import { Navigate, useParams } from "react-router-dom";
 import { allPhrasalVerbs, gameModes } from "../data/phrasalVerbs";
 import { Layout } from "../components/Layout";
@@ -8,6 +8,13 @@ import { useAudioSettings } from "../hooks/useAudioSettings";
 import { useGameSession } from "../hooks/useGameSession";
 import { playCorrect, playNext, playTap, playWrong, unlockAudio } from "../utils/gameAudio";
 import { speakEnglish, speakEnglishSequence, stopSpeech } from "../utils/speech";
+
+const IMAGE_STAGGER_MS = 85;
+const IMAGE_ENTER_MS = 380;
+const IMAGE_FEEDBACK_MS = 750;
+const IMAGE_EXIT_MS = 300;
+
+type ImageAnimPhase = "enter" | "play" | "exit";
 
 function optionClass(
   id: number,
@@ -46,6 +53,7 @@ export function GamePage() {
   } = session;
 
   const { type, target, options } = currentRound;
+  const [imageAnim, setImageAnim] = useState<ImageAnimPhase>("enter");
   const accuracy =
     totalAnswered > 0 ? Math.round((correctCount / totalAnswered) * 100) : 100;
   const streakProgress = streak > 0 ? Math.min(100, (streak % 10) * 10 + 10) : 8;
@@ -71,7 +79,33 @@ export function GamePage() {
 
   useEffect(() => () => stopSpeech(), []);
 
+  useEffect(() => {
+    if (type !== "choose-image") return;
+    setImageAnim("enter");
+    const readyAt = IMAGE_ENTER_MS + IMAGE_STAGGER_MS * 3;
+    const t = window.setTimeout(() => setImageAnim("play"), readyAt);
+    return () => window.clearTimeout(t);
+  }, [questionNumber, type]);
+
+  useEffect(() => {
+    if (type !== "choose-image" || !feedback) return;
+    const t = window.setTimeout(() => setImageAnim("exit"), IMAGE_FEEDBACK_MS);
+    return () => window.clearTimeout(t);
+  }, [feedback, type]);
+
+  useEffect(() => {
+    if (type !== "choose-image" || imageAnim !== "exit") return;
+    const doneAt = IMAGE_EXIT_MS + IMAGE_STAGGER_MS * 3 + 40;
+    const t = window.setTimeout(() => {
+      stopSpeech();
+      if (sfxEnabled) playNext();
+      nextRound();
+    }, doneAt);
+    return () => window.clearTimeout(t);
+  }, [imageAnim, type, nextRound, sfxEnabled]);
+
   const handleAnswer = (id: number) => {
+    if (type === "choose-image" && imageAnim !== "play") return;
     unlockAudio();
     if (sfxEnabled) playTap();
     answer(id, mode.multiplier);
@@ -125,19 +159,32 @@ export function GamePage() {
       </div>
       {type === "choose-image" && (
         <section className="game-panel game-panel--choose-image" key={`${questionNumber}-image`}>
-          <div className="prompt-card">
+          <div
+            className={`prompt-card prompt-card-anim ${
+              imageAnim === "enter" ? "prompt-card-anim--enter" : ""
+            } ${imageAnim === "exit" ? "prompt-card-anim--exit" : ""}`}
+          >
             <p className="prompt-label">Знайди картинку для:</p>
             <h2 className="prompt-phrase">{target.phrase}</h2>
             <p className="prompt-phonetic">{target.phonetic}</p>
             {feedback && <p className="prompt-reveal-uk">{target.uk}</p>}
           </div>
-          <div className={`image-options ${feedback ? "revealed" : ""}`}>
-            {options.map((opt) => (
+          <div
+            className={`image-options image-options-anim ${
+              imageAnim === "enter" ? "image-options-anim--enter" : ""
+            } ${imageAnim === "exit" ? "image-options-anim--exit" : ""} ${feedback ? "revealed" : ""}`}
+          >
+            {options.map((opt, index) => (
               <button
                 key={opt.id}
                 type="button"
+                style={
+                  imageAnim === "enter" || imageAnim === "exit"
+                    ? ({ "--stagger": `${index * IMAGE_STAGGER_MS}ms` } as CSSProperties)
+                    : undefined
+                }
                 className={`image-option ${optionClass(opt.id, target.id, selectedId, feedback)} ${feedback ? "revealed" : ""}`}
-                disabled={!!feedback}
+                disabled={!!feedback || imageAnim !== "play"}
                 onClick={() => handleAnswer(opt.id)}
               >
                 <div className="image-option-media">
@@ -149,21 +196,9 @@ export function GamePage() {
                   />
                 </div>
                 <p className="image-option-caption">{opt.uk}</p>
-                {feedback && (
-                  <div className="option-reveal">
-                    <span className="option-reveal-phrase">{opt.phrase}</span>
-                  </div>
-                )}
               </button>
             ))}
           </div>
-          {feedback && (
-            <div className="image-round-actions">
-              <button type="button" className="btn-primary btn-next" onClick={handleNext}>
-                Далі ⟶
-              </button>
-            </div>
-          )}
         </section>
       )}
 
